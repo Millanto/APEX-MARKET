@@ -1,0 +1,6 @@
+{
+  "name": "ApexMarket",
+  "description": "A highly-polished, fully-functional commercial e-commerce platform with dynamic search, user auth, firestore sync, cart, checkout, order history, and product reviews.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
