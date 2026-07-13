@@ -118,9 +118,9 @@ export default function ProductCard({ product }: ProductCardProps) {
         <div className="flex items-end justify-between mt-3">
           <div className="flex flex-col">
             {hasDiscount && (
-              <span className="text-xs line-through text-zinc-400">{formatPrice(product.oldPrice)}</span>
+              <span className="text-xs line-through text-zinc-400 whitespace-nowrap">{formatPrice(product.oldPrice)}</span>
             )}
-            <span className="text-lg font-black text-zinc-950 dark:text-white">
+            <span className="text-lg font-black text-zinc-950 dark:text-white whitespace-nowrap">
               {formatPrice(product.price)}
             </span>
           </div>
