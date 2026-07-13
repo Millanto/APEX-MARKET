@@ -344,9 +344,14 @@ export function AppProvider({ children }: { children: ReactNode }) {
         lastLogin: new Date().toISOString()
       };
       await setDoc(doc(db, 'users', res.user.uid), newProfile);
-      setProfile(newProfile);
-      showToast('Registration successful! Welcome.', 'success');
-      navigateTo('home');
+      
+      // Sign out immediately to prevent auto-login
+      await signOut(auth);
+      setProfile(null);
+      setUser(null);
+      
+      showToast('Registration complete! Please sign in with your credentials.', 'success');
+      return true;
     } catch (err: any) {
       showToast(err.message || 'Registration failed', 'error');
       throw err;

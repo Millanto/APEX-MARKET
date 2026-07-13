@@ -90,8 +90,9 @@ export default function AuthView() {
           return;
         }
         await registerWithEmail(name, email, password);
-        showToast('Registration complete! Welcome to ApexMarket.', 'success');
-        navigateTo('home');
+        setPassword('');
+        setConfirmPassword('');
+        setMode('login');
       } else if (mode === 'forgot') {
         await resetPassword(email);
         showToast('Password reset link dispatched! Check your email.', 'success');
