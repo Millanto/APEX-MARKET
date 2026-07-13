@@ -198,21 +198,21 @@ export default function Header() {
             </div>
 
             {/* Right Side Icons & Actions */}
-            <div className="flex items-center gap-1.5 sm:gap-3">
+            <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
               
               {/* Theme Toggle */}
               <button
                 onClick={toggleDarkMode}
-                className="p-2.5 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-900 text-zinc-600 dark:text-zinc-300 transition-colors cursor-pointer"
+                className="p-2 sm:p-2.5 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-900 text-zinc-600 dark:text-zinc-300 transition-colors cursor-pointer shrink-0"
                 aria-label="Toggle theme"
               >
                 {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
               </button>
 
-              {/* Wishlist Button */}
+              {/* Wishlist Button (Hidden on mobile as it's elegantly housed in the floating bottom nav) */}
               <button
                 onClick={() => navigateTo('profile')} // Open profile which hosts Wishlist
-                className="p-2.5 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-900 text-zinc-600 dark:text-zinc-300 transition-colors relative cursor-pointer"
+                className="hidden md:flex p-2.5 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-900 text-zinc-600 dark:text-zinc-300 transition-colors relative cursor-pointer shrink-0"
                 aria-label="Wishlist"
               >
                 <Heart className="w-5 h-5" />
@@ -223,9 +223,9 @@ export default function Header() {
                 )}
               </button>
 
-              {/* Shopping Cart Button */}
+              {/* Shopping Cart Button (Hidden on mobile as it's elegantly housed in the floating bottom nav) */}
               <div 
-                className="relative"
+                className="relative hidden md:block shrink-0"
                 onMouseEnter={() => setCartPreviewOpen(true)}
                 onMouseLeave={() => setCartPreviewOpen(false)}
               >
@@ -249,7 +249,7 @@ export default function Header() {
                       initial={{ opacity: 0, y: 15 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 15 }}
-                      className="absolute right-0 mt-2 w-80 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-xl overflow-hidden z-50 hidden sm:block p-4"
+                      className="absolute right-0 mt-2 w-80 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-xl overflow-hidden z-50 p-4"
                     >
                       <h4 className="text-sm font-bold text-zinc-900 dark:text-white pb-2 border-b border-zinc-100 dark:border-zinc-800">Shopping Cart ({cartItemCount})</h4>
                       <div className="max-h-60 overflow-y-auto py-2 divide-y divide-zinc-100 dark:divide-zinc-800">
@@ -282,20 +282,20 @@ export default function Header() {
               </div>
 
               {/* User Profile dropdown or Login button */}
-              <div ref={userMenuRef} className="relative">
+              <div ref={userMenuRef} className="relative shrink-0">
                 {user ? (
                   <>
                     <button
                       onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                      className="flex items-center gap-1 p-1 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors cursor-pointer"
+                      className="flex items-center gap-1 p-1 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors cursor-pointer shrink-0"
                     >
                       <img
                         src={profile?.photoURL || `https://api.dicebear.com/7.x/pixel-art/svg?seed=${user.uid}`}
                         alt={profile?.name || 'Profile'}
-                        className="w-8 h-8 rounded-full border border-zinc-200 dark:border-zinc-800 object-cover"
+                        className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-zinc-200 dark:border-zinc-800 object-cover"
                         referrerPolicy="no-referrer"
                       />
-                      <ChevronDown className="w-4 h-4 text-zinc-500" />
+                      <ChevronDown className="w-4 h-4 text-zinc-500 hidden sm:block" />
                     </button>
 
                     <AnimatePresence>
@@ -351,10 +351,10 @@ export default function Header() {
                 ) : (
                   <button
                     onClick={() => navigateTo('auth')}
-                    className="flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-950 dark:bg-white text-white dark:text-zinc-950 hover:bg-zinc-900 dark:hover:bg-zinc-100 font-bold text-sm transition-all shadow-md cursor-pointer"
+                    className="flex items-center justify-center gap-2 w-10 h-10 md:w-auto md:px-4 md:py-2 rounded-full bg-zinc-950 dark:bg-white text-white dark:text-zinc-950 hover:bg-zinc-900 dark:hover:bg-zinc-100 font-bold text-sm transition-all shadow-md cursor-pointer shrink-0"
                   >
                     <User className="w-4 h-4" />
-                    <span>Sign In</span>
+                    <span className="hidden md:inline">Sign In</span>
                   </button>
                 )}
               </div>
@@ -362,7 +362,7 @@ export default function Header() {
               {/* Mobile menu trigger */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="lg:hidden p-2 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-900 text-zinc-600 dark:text-zinc-300 cursor-pointer"
+                className="lg:hidden p-2 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-900 text-zinc-600 dark:text-zinc-300 cursor-pointer shrink-0"
                 aria-label="Open menu"
               >
                 {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
