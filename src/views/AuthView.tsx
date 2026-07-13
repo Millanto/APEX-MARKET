@@ -159,40 +159,7 @@ export default function AuthView() {
                   </ol>
                 </div>
               ) : (
-                <div className="space-y-3">
-                  <p className="text-xs text-red-600 dark:text-red-400 font-mono bg-red-50/50 dark:bg-red-950/30 p-2.5 rounded-xl border border-red-100 dark:border-red-900/20 break-all">{authError}</p>
-                  
-                  {/* Smart diagnostics based on Firebase error messages */}
-                  {(authError.includes('unauthorized-domain') || authError.includes('auth/unauthorized-domain')) && (
-                    <div className="text-xs text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/30 p-3.5 rounded-xl space-y-2 leading-relaxed">
-                      <p className="font-bold">⚠️ Unauthorized Domain Error Detected!</p>
-                      <p>Firebase Authentication restricts popups to a list of authorized domains. Since you are using a dynamic AI Studio preview, you must add this domain to your Firebase authorized list:</p>
-                      <div className="flex items-center gap-2 bg-white dark:bg-zinc-950 px-2.5 py-1.5 rounded-lg border border-amber-200/50 dark:border-amber-800/30 font-mono text-[11px] font-semibold text-zinc-800 dark:text-zinc-200 select-all break-all">
-                        {window.location.hostname}
-                      </div>
-                      <p className="font-bold pt-1 text-zinc-900 dark:text-white">How to fix:</p>
-                      <ol className="list-decimal list-inside space-y-1 ml-1 text-zinc-600 dark:text-zinc-400">
-                        <li>Go to the <a href="https://console.firebase.google.com/" target="_blank" rel="noopener noreferrer" className="underline font-bold text-blue-600 dark:text-blue-400">Firebase Console</a></li>
-                        <li>Click <strong>Authentication</strong> &gt; <strong>Settings</strong> tab &gt; <strong>Authorized domains</strong>.</li>
-                        <li>Click <strong>Add domain</strong> and paste the domain shown above: <strong className="font-mono">{window.location.hostname}</strong></li>
-                        <li>Save and try signing in again!</li>
-                      </ol>
-                    </div>
-                  )}
-
-                  {/* Google OAuth Consent "Testing Mode" Diagnostics */}
-                  {(authError.includes('google') || authError.includes('Google') || authError.includes('popup') || authError.includes('cancelled') || authError.includes('closed')) && (
-                    <div className="text-xs text-zinc-700 dark:text-zinc-300 bg-zinc-50 dark:bg-zinc-950/40 border border-zinc-200 dark:border-zinc-800/50 p-3.5 rounded-xl space-y-2 leading-relaxed">
-                      <p className="font-bold text-zinc-900 dark:text-white">💡 Troubleshooting Other Google Accounts:</p>
-                      <p>If Google Sign-In fails or only works for your primary developer account, it is likely due to one of these common causes:</p>
-                      <ul className="list-disc list-inside space-y-1 ml-1 text-zinc-600 dark:text-zinc-400">
-                        <li><strong>OAuth Consent "Testing" status:</strong> By default, Google Cloud OAuth apps are in "Testing" mode. Any account other than yours will be BLOCKED unless you add their Gmail to the <strong>Test users</strong> list in the <a href="https://console.cloud.google.com/apis/credentials/consent" target="_blank" rel="noopener noreferrer" className="underline font-bold text-blue-600 dark:text-blue-400">Google Cloud Consent Screen</a>, or publish the app to Production.</li>
-                        <li><strong>Popups Blocked:</strong> Ensure your browser allows popups for this site.</li>
-                        <li><strong>Third-party Cookies:</strong> In Incognito/Private tabs, browsers block third-party cookies required by Firebase Auth. Try a regular tab.</li>
-                      </ul>
-                    </div>
-                  )}
-                </div>
+                <p className="text-xs text-red-600 dark:text-red-400 font-mono bg-red-50/50 dark:bg-red-950/30 p-2.5 rounded-xl border border-red-100 dark:border-red-900/20 break-all">{authError}</p>
               )}
             </div>
           )}
