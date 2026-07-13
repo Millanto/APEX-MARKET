@@ -134,33 +134,12 @@ export default function AuthView() {
 
           {/* Auth Error Guidance Box */}
           {authError && (
-            <div className="p-4 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/30 rounded-2xl space-y-2 text-left">
-              <div className="flex items-center gap-2 text-red-600 dark:text-red-400 font-bold text-xs">
-                <ShieldAlert className="w-4 h-4 shrink-0" />
-                <span>
-                  {authError === 'operation-not-allowed'
-                    ? 'Authentication Configuration Required'
-                    : 'Authentication Error'}
-                </span>
+            <div className="p-4 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/30 rounded-2xl text-left flex items-start gap-3">
+              <ShieldAlert className="w-5 h-5 text-red-600 dark:text-red-400 shrink-0 mt-0.5" />
+              <div className="space-y-1">
+                <h4 className="text-xs font-bold text-red-800 dark:text-red-300">Authentication Error</h4>
+                <p className="text-xs text-red-600 dark:text-red-400 font-mono break-all">{authError}</p>
               </div>
-              
-              {authError === 'operation-not-allowed' ? (
-                <div className="text-xs text-red-700 dark:text-red-300 space-y-2 leading-relaxed">
-                  <p>
-                    The <strong>Email/Password</strong> or <strong>Google</strong> sign-in method is currently disabled in your Firebase console.
-                  </p>
-                  <p className="font-semibold text-zinc-900 dark:text-white">To enable it and log in:</p>
-                  <ol className="list-decimal list-inside space-y-1 ml-1 text-zinc-600 dark:text-zinc-400">
-                    <li>Go to the <a href="https://console.firebase.google.com/project/stoked-melody-9rtgb/authentication/providers" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 underline font-semibold hover:text-blue-700">Firebase Console Auth Providers</a> page.</li>
-                    <li>Click on <strong>Add new provider</strong> (or edit the existing one).</li>
-                    <li>Select <strong>Email/Password</strong> and toggle <strong>Enable</strong>.</li>
-                    <li>Repeat for <strong>Google Sign-In</strong> if desired.</li>
-                    <li>Click <strong>Save</strong> and try logging in or registering again!</li>
-                  </ol>
-                </div>
-              ) : (
-                <p className="text-xs text-red-600 dark:text-red-400 font-mono bg-red-50/50 dark:bg-red-950/30 p-2.5 rounded-xl border border-red-100 dark:border-red-900/20 break-all">{authError}</p>
-              )}
             </div>
           )}
 
