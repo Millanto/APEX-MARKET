@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
+import { formatPrice } from '../utils/format';
 import { 
   Star, 
   ShoppingCart, 
@@ -199,10 +200,10 @@ export default function ProductDetailsView() {
 
               {/* Price segment */}
               <div className="flex items-baseline gap-4 py-2 border-b border-zinc-200/50 dark:border-zinc-800/50">
-                <span className="text-3xl font-black text-zinc-950 dark:text-white">${product.price}</span>
+                <span className="text-3xl font-black text-zinc-950 dark:text-white">{formatPrice(product.price)}</span>
                 {product.discount > 0 && (
                   <>
-                    <span className="text-base line-through text-zinc-400">${product.oldPrice}</span>
+                    <span className="text-base line-through text-zinc-400">{formatPrice(product.oldPrice)}</span>
                     <span className="text-xs bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 font-black px-2 py-0.5 rounded-md">
                       -{product.discount}% OFF
                     </span>
@@ -394,7 +395,7 @@ export default function ProductDetailsView() {
                 <img src={product.images[0]} alt={product.name} className="w-16 h-16 object-cover rounded-xl bg-zinc-100" />
                 <div>
                   <h4 className="text-sm font-bold text-zinc-900 dark:text-white truncate max-w-[150px]">{product.name}</h4>
-                  <p className="text-xs font-black text-zinc-400">${product.price}</p>
+                  <p className="text-xs font-black text-zinc-400">{formatPrice(product.price)}</p>
                 </div>
               </div>
 
@@ -405,7 +406,7 @@ export default function ProductDetailsView() {
                 <img src={bundleProduct.images[0]} alt={bundleProduct.name} className="w-16 h-16 object-cover rounded-xl bg-zinc-100" />
                 <div>
                   <h4 className="text-sm font-bold text-zinc-900 dark:text-white truncate max-w-[150px]">{bundleProduct.name}</h4>
-                  <p className="text-xs font-black text-zinc-400">${bundleProduct.price}</p>
+                  <p className="text-xs font-black text-zinc-400">{formatPrice(bundleProduct.price)}</p>
                 </div>
               </div>
             </div>
@@ -413,7 +414,7 @@ export default function ProductDetailsView() {
             <div className="text-center md:text-right space-y-3">
               <div>
                 <span className="text-xs text-zinc-400 block font-mono">BUNDLE PRICE FOR BOTH:</span>
-                <span className="text-2xl font-black text-zinc-950 dark:text-white">${product.price + bundleProduct.price}</span>
+                <span className="text-2xl font-black text-zinc-950 dark:text-white">{formatPrice(product.price + bundleProduct.price)}</span>
               </div>
               <button
                 onClick={handleAddBundleToCart}

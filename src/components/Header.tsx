@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
+import { formatPrice } from '../utils/format';
 import { 
   Search, 
   ShoppingBag, 
@@ -88,7 +89,7 @@ export default function Header() {
       {/* Top promotional bar */}
       <div className="w-full bg-gradient-to-r from-zinc-950 via-zinc-900 to-zinc-950 dark:from-black dark:via-zinc-950 dark:to-black text-white py-2 px-4 text-center text-xs font-semibold tracking-wide flex items-center justify-center gap-2 border-b border-zinc-800/50">
         <Sparkles className="w-3.5 h-3.5 text-yellow-400 animate-pulse" />
-        <span>LUXURY REDEFINED: GET FREE GLOBAL DELIVERY ON ORDERS OVER $150</span>
+        <span>LUXURY REDEFINED: GET FREE GLOBAL DELIVERY ON ORDERS OVER GH₵150</span>
         <span className="hidden sm:inline bg-zinc-800 dark:bg-zinc-900 px-2 py-0.5 rounded-full text-[10px] ml-2">CODE: APEX20</span>
       </div>
 
@@ -186,7 +187,7 @@ export default function Header() {
                             <h4 className="text-sm font-semibold text-zinc-900 dark:text-white truncate">{p.name}</h4>
                             <p className="text-xs text-zinc-400 truncate">{p.brand} • {p.category}</p>
                           </div>
-                          <span className="text-sm font-bold text-zinc-900 dark:text-white">${p.price}</span>
+                          <span className="text-sm font-bold text-zinc-900 dark:text-white">{formatPrice(p.price)}</span>
                         </button>
                       ))
                     ) : (
@@ -258,16 +259,16 @@ export default function Header() {
                             <img src={item.product.images[0]} alt={item.product.name} className="w-10 h-10 object-cover rounded-lg bg-zinc-100" />
                             <div className="flex-1 min-w-0">
                               <h5 className="text-xs font-bold text-zinc-900 dark:text-white truncate">{item.product.name}</h5>
-                              <p className="text-[10px] text-zinc-400">{item.quantity} x ${item.product.price}</p>
+                              <p className="text-[10px] text-zinc-400">{item.quantity} x {formatPrice(item.product.price)}</p>
                             </div>
-                            <span className="text-xs font-bold text-zinc-900 dark:text-white">${item.product.price * item.quantity}</span>
+                            <span className="text-xs font-bold text-zinc-900 dark:text-white">{formatPrice(item.product.price * item.quantity)}</span>
                           </div>
                         ))}
                       </div>
                       <div className="pt-2 border-t border-zinc-100 dark:border-zinc-800 flex justify-between items-center mb-3">
                         <span className="text-xs text-zinc-500">Subtotal:</span>
                         <span className="text-sm font-bold text-zinc-900 dark:text-white">
-                          ${cart.reduce((sub, item) => sub + item.product.price * item.quantity, 0)}
+                          {formatPrice(cart.reduce((sub, item) => sub + item.product.price * item.quantity, 0))}
                         </span>
                       </div>
                       <button

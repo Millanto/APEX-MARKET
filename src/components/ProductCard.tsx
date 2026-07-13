@@ -3,6 +3,7 @@ import { useApp } from '../context/AppContext';
 import { Product } from '../types';
 import { Star, ShoppingCart, Heart, Eye } from 'lucide-react';
 import { motion } from 'motion/react';
+import { formatPrice } from '../utils/format';
 
 interface ProductCardProps {
   product: Product;
@@ -117,10 +118,10 @@ export default function ProductCard({ product }: ProductCardProps) {
         <div className="flex items-end justify-between mt-3">
           <div className="flex flex-col">
             {hasDiscount && (
-              <span className="text-xs line-through text-zinc-400">${product.oldPrice}</span>
+              <span className="text-xs line-through text-zinc-400">{formatPrice(product.oldPrice)}</span>
             )}
             <span className="text-lg font-black text-zinc-950 dark:text-white">
-              ${product.price}
+              {formatPrice(product.price)}
             </span>
           </div>
 

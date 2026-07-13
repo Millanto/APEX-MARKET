@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
+import { formatPrice } from '../utils/format';
 import { 
   Trash2, 
   Minus, 
@@ -90,7 +91,7 @@ export default function CartView() {
                       <div className="flex items-center justify-between w-full sm:w-1/2 gap-6">
                         {/* Price */}
                         <div className="text-left sm:text-right">
-                          <span className="text-sm font-bold text-zinc-900 dark:text-white">${product.price}</span>
+                          <span className="text-sm font-bold text-zinc-900 dark:text-white">{formatPrice(product.price)}</span>
                           <span className="text-[10px] text-zinc-400 block">Unit Price</span>
                         </div>
 
@@ -114,7 +115,7 @@ export default function CartView() {
                         {/* Calculated total and delete icon */}
                         <div className="flex items-center gap-4">
                           <div className="text-right">
-                            <span className="text-base font-black text-zinc-950 dark:text-white">${itemTotal}</span>
+                            <span className="text-base font-black text-zinc-950 dark:text-white">{formatPrice(itemTotal)}</span>
                           </div>
                           <button
                             onClick={() => removeFromCart(product.id)}
@@ -187,32 +188,32 @@ export default function CartView() {
                 <div className="space-y-3.5 text-xs text-zinc-500 dark:text-zinc-400">
                   <div className="flex justify-between">
                     <span>Basket Subtotal</span>
-                    <span className="font-bold text-zinc-900 dark:text-white">${cartSubtotal}</span>
+                    <span className="font-bold text-zinc-900 dark:text-white">{formatPrice(cartSubtotal)}</span>
                   </div>
 
                   {couponCode && (
                     <div className="flex justify-between text-emerald-600 font-bold">
                       <span>Promo discount</span>
-                      <span>-${cartSubtotal - (cartSubtotal - (cartSubtotal * (couponCode === 'APEX20' ? 0.20 : 0.10)))}</span>
+                      <span>-{formatPrice(cartSubtotal * (couponCode === 'APEX20' ? 0.20 : 0.10))}</span>
                     </div>
                   )}
 
                   <div className="flex justify-between">
                     <span>Estimated Sales Tax (8%)</span>
-                    <span className="font-bold text-zinc-900 dark:text-white">${cartTax.toFixed(2)}</span>
+                    <span className="font-bold text-zinc-900 dark:text-white">{formatPrice(cartTax)}</span>
                   </div>
 
                   <div className="flex justify-between">
                     <span>Estimated Express Shipping</span>
                     <span className="font-bold text-zinc-900 dark:text-white">
-                      {cartShipping === 0 ? 'COMPLEMENTARY' : `$${cartShipping}`}
+                      {cartShipping === 0 ? 'COMPLEMENTARY' : formatPrice(cartShipping)}
                     </span>
                   </div>
                 </div>
 
                 <div className="pt-4 border-t border-zinc-100 dark:border-zinc-800 flex justify-between items-baseline mb-6">
                   <span className="text-sm font-bold text-zinc-950 dark:text-white">Order Total</span>
-                  <span className="text-2xl font-black text-zinc-950 dark:text-white">${cartTotal.toFixed(2)}</span>
+                  <span className="text-2xl font-black text-zinc-950 dark:text-white">{formatPrice(cartTotal)}</span>
                 </div>
 
                 <button

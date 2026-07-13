@@ -41,7 +41,7 @@ export default function Footer() {
           </div>
           <div>
             <h4 className="text-sm font-bold text-white">Free Express Shipping</h4>
-            <p className="text-xs text-zinc-500">Comped on orders above $150</p>
+            <p className="text-xs text-zinc-500">Comped on orders above GH₵150</p>
           </div>
         </div>
 

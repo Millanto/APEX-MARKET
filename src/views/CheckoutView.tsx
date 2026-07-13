@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
+import { formatPrice } from '../utils/format';
 import { 
   Lock, 
   ChevronRight, 
@@ -429,9 +430,9 @@ export default function CheckoutView() {
                     <img src={item.product.images[0]} alt={item.product.name} className="w-12 h-12 object-cover rounded-xl bg-zinc-100" />
                     <div className="flex-1 min-w-0">
                       <h4 className="text-xs font-bold text-zinc-900 dark:text-white truncate">{item.product.name}</h4>
-                      <p className="text-[10px] text-zinc-400">{item.quantity} x ${item.product.price}</p>
+                      <p className="text-[10px] text-zinc-400">{item.quantity} x {formatPrice(item.product.price)}</p>
                     </div>
-                    <span className="text-xs font-bold text-zinc-900 dark:text-white">${item.product.price * item.quantity}</span>
+                    <span className="text-xs font-bold text-zinc-900 dark:text-white">{formatPrice(item.product.price * item.quantity)}</span>
                   </div>
                 ))}
               </div>
@@ -440,31 +441,31 @@ export default function CheckoutView() {
               <div className="space-y-3.5 pt-4 border-t border-zinc-100 dark:border-zinc-850 text-xs text-zinc-500 dark:text-zinc-400">
                 <div className="flex justify-between">
                   <span>Subtotal</span>
-                  <span className="font-bold text-zinc-900 dark:text-white">${cartSubtotal}</span>
+                  <span className="font-bold text-zinc-900 dark:text-white">{formatPrice(cartSubtotal)}</span>
                 </div>
 
                 {couponCode && (
                   <div className="flex justify-between text-emerald-600 font-bold">
                     <span>Applied Coupon ({couponCode})</span>
-                    <span>-${cartSubtotal - (cartSubtotal - (cartSubtotal * (couponCode === 'APEX20' ? 0.20 : 0.10)))}</span>
+                    <span>-{formatPrice(cartSubtotal * (couponCode === 'APEX20' ? 0.20 : 0.10))}</span>
                   </div>
                 )}
 
                 <div className="flex justify-between">
                   <span>Tax (8%)</span>
-                  <span className="font-bold text-zinc-900 dark:text-white">${cartTax.toFixed(2)}</span>
+                  <span className="font-bold text-zinc-900 dark:text-white">{formatPrice(cartTax)}</span>
                 </div>
 
                 <div className="flex justify-between">
                   <span>Express Shipping</span>
                   <span className="font-bold text-zinc-900 dark:text-white">
-                    {cartShipping === 0 ? 'COMPLEMENTARY' : `$${cartShipping}`}
+                    {cartShipping === 0 ? 'COMPLEMENTARY' : formatPrice(cartShipping)}
                   </span>
                 </div>
 
                 <div className="pt-4 border-t border-zinc-100 dark:border-zinc-850 flex justify-between items-baseline mb-4 text-sm font-bold text-zinc-950 dark:text-white">
                   <span>Amount Charged</span>
-                  <span className="text-xl font-black">${cartTotal.toFixed(2)}</span>
+                  <span className="text-xl font-black">{formatPrice(cartTotal)}</span>
                 </div>
               </div>
 

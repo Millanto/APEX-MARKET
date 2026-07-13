@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
+import { formatPrice } from '../utils/format';
 import { 
   Home, 
   Grid, 
@@ -195,7 +196,7 @@ export default function MobileBottomNav() {
                           <h4 className="text-sm font-bold text-white truncate">{p.name}</h4>
                           <p className="text-xs text-zinc-400 truncate">{p.brand} • {p.category}</p>
                         </div>
-                        <span className="text-sm font-black text-white">${p.price}</span>
+                        <span className="text-sm font-black text-white">{formatPrice(p.price)}</span>
                       </button>
                     ))}
                     <button
