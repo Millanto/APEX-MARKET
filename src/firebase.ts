@@ -1,13 +1,15 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
-import firebaseConfig from '../firebase-applet-config.json';
+import { firebaseConfig } from './firebaseConfig';
 
-// Initialize Firebase with the provisioned workspace configuration
+// Initialize Firebase with the custom configuration
 const app = initializeApp(firebaseConfig);
 
-// Extract the custom firestoreDatabaseId from the configuration
-export const db = getFirestore(app, firebaseConfig.firestoreDatabaseId);
+// Extract custom firestoreDatabaseId if it exists, otherwise default to '(default)'
+export const db = (firebaseConfig as any).firestoreDatabaseId
+  ? getFirestore(app, (firebaseConfig as any).firestoreDatabaseId)
+  : getFirestore(app);
 export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
 
