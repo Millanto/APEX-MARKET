@@ -137,7 +137,11 @@ export default function AuthView() {
             <div className="p-4 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900/30 rounded-2xl space-y-2 text-left">
               <div className="flex items-center gap-2 text-red-600 dark:text-red-400 font-bold text-xs">
                 <ShieldAlert className="w-4 h-4 shrink-0" />
-                <span>Authentication Configuration Required</span>
+                <span>
+                  {authError === 'operation-not-allowed'
+                    ? 'Authentication Configuration Required'
+                    : 'Authentication Error'}
+                </span>
               </div>
               
               {authError === 'operation-not-allowed' ? (

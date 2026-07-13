@@ -206,7 +206,25 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   // Auth State Listener
   useEffect(() => {
+    let unsubscribeWishlist: (() => void) | null = null;
+    let unsubscribeAddresses: (() => void) | null = null;
+    let unsubscribeOrders: (() => void) | null = null;
+
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      // Clean up previous listeners first to avoid memory leaks and permissions errors
+      if (unsubscribeWishlist) {
+        unsubscribeWishlist();
+        unsubscribeWishlist = null;
+      }
+      if (unsubscribeAddresses) {
+        unsubscribeAddresses();
+        unsubscribeAddresses = null;
+      }
+      if (unsubscribeOrders) {
+        unsubscribeOrders();
+        unsubscribeOrders = null;
+      }
+
       setUser(currentUser);
       if (currentUser) {
         // Fetch or create user profile document
@@ -235,7 +253,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
         // Setup real-time listeners for User specific collections
         const wishlistQuery = query(collection(db, 'wishlist'), where('userId', '==', currentUser.uid));
-        const unsubscribeWishlist = onSnapshot(wishlistQuery, (snap) => {
+        unsubscribeWishlist = onSnapshot(wishlistQuery, (snap) => {
           const items: WishlistItem[] = [];
           snap.forEach((d) => items.push(d.data() as WishlistItem));
           setWishlist(items);
@@ -244,7 +262,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         });
 
         const addressQuery = query(collection(db, 'addresses'), where('userId', '==', currentUser.uid));
-        const unsubscribeAddresses = onSnapshot(addressQuery, (snap) => {
+        unsubscribeAddresses = onSnapshot(addressQuery, (snap) => {
           const items: SavedAddress[] = [];
           snap.forEach((d) => items.push(d.data() as SavedAddress));
           setAddresses(items);
@@ -253,7 +271,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         });
 
         const orderQuery = query(collection(db, 'orders'), where('userId', '==', currentUser.uid));
-        const unsubscribeOrders = onSnapshot(orderQuery, (snap) => {
+        unsubscribeOrders = onSnapshot(orderQuery, (snap) => {
           const items: Order[] = [];
           snap.forEach((d) => items.push(d.data() as Order));
           // Sort orders by date descending
@@ -262,12 +280,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
         }, (error) => {
           console.error("Orders sync fail:", error);
         });
-
-        return () => {
-          unsubscribeWishlist();
-          unsubscribeAddresses();
-          unsubscribeOrders();
-        };
       } else {
         setProfile(null);
         setWishlist([]);
@@ -277,7 +289,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
       setAuthLoading(false);
     });
 
-    return () => unsubscribe();
+    return () => {
+      unsubscribe();
+      if (unsubscribeWishlist) unsubscribeWishlist();
+      if (unsubscribeAddresses) unsubscribeAddresses();
+      if (unsubscribeOrders) unsubscribeOrders();
+    };
   }, []);
 
   // Google Login Auth
@@ -289,6 +306,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       navigateTo('home');
     } catch (err: any) {
       showToast(err.message || 'Failed Google authentication', 'error');
+      throw err;
     } finally {
       setAuthLoading(false);
     }
